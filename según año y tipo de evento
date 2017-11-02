@@ -1,0 +1,25 @@
+select --"Nombre del evento",
+        substr("Fecha de pedido",1,4) as "año",
+        case when "Nombre del evento" ilike '%taller%' then 'Talleres'
+                else "Nombre del evento" end as evento,
+        count(*)
+from asistentes
+group by case when "Nombre del evento" ilike '%taller%' then 'Talleres'
+              else "Nombre del evento" end,
+        substr("Fecha de pedido",1,4)
+order by substr("Fecha de pedido",1,4) desc, count desc
+;
+
+ año  |                                          evento                                          | count
+------+------------------------------------------------------------------------------------------+-------
+ 2017 | Talleres                                                                                 |   476
+ 2017 | FOSS4G + SOTM 2017 ARGENTINA                                                             |   163
+ 2017 | Webinario Base de datos geoespaciales con PostGIS                                        |   125
+ 2017 | Webinario: Implementación de estándares de IDERA con Software libre. Parte I             |    94
+ 2017 | Webinario Base de datos geoespaciales con PostGIS II                                     |    92
+ 2017 | Mapatón / Hackatón                                                                       |    46
+ 2017 | Jornada sobre el Software Libre de Geomática y SIG aplicado a Educación e Investigación  |    18
+ 2016 | Talleres                                                                                 |   409
+ 2016 | FOSS4G Argentina 2016                                                                    |   221
+ 2016 | Encuentro de Geodatos Abiertos                                                           |    79
+(10 filas)
