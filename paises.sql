@@ -1,4 +1,4 @@
-select "Ciudad y País de Residencia", COUNT(*)
+select "Ciudad y País de Residencia", count(*)
 from asistentes
 where "Estado del participante" in ('Acreditado', 'Participa', 'Cambiado')
 group by "Ciudad y País de Residencia"
