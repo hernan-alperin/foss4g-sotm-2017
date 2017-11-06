@@ -1,17 +1,19 @@
+select "Ciudad y País de Residencia", count(*)
+from asistentes
+where "Estado del participante" in ('Acreditado', 'Participa', 'Cambiado')
+and substr("Fecha de pedido", 1, 4) = '2017'
+group by "Ciudad y País de Residencia"
+order by count desc
+;
+
+
+
 -----------------------------------------------------------------------
 -- OJO ESTO NO VALE, HAY QUE DISTINGUIR POR NOMBRES LOS REPETIDOS    --
 -- Alvarez, Álvarez, ALVAREZ, etc
 -----------------------------------------------------------------------
 
 (!) No. Hay que selecionar asistentes distintos
-
-select "Ciudad y País de Residencia", count(*)
-from asistentes
-where "Estado del participante" in ('Acreditado', 'Participa', 'Cambiado')
-group by "Ciudad y País de Residencia"
-order by count desc
-;
-
 
 
         Ciudad y País de Residencia         | count
@@ -68,13 +70,18 @@ copiando y pegando, cherry picking...
 --Hay que selecionar asistentes distintos
 
 with distintos as (
-  select lower("Apellido"), lower("Nombre"), count(*)
+  select translate(lower("Apellido"),'áéíóúü-, ','aeiouu'), translate(lower("Nombre"),'áéíóúü-, ','aeiouu'), count(*)
   from asistentes
   where "Estado del participante" in ('Acreditado', 'Participa', 'Cambiado')
   and substr("Fecha de pedido",1,4) = '2017'
   group by lower("Apellido"), lower("Nombre")
   order by lower("Apellido"), lower("Nombre")
   )
+select * from distintos
+;
+
+        
+        
         
 select "Ciudad y País de Residencia", count(*)
 from asistentes
