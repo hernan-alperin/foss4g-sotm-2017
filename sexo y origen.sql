@@ -1,14 +1,9 @@
-select "Ciudad y País de Residencia", count(*)
-from asistentes
-where "Estado del participante" in ('Acreditado', 'Participa', 'Cambiado')
-and substr("Fecha de pedido", 1, 4) = '2017'
-group by "Ciudad y País de Residencia"
-order by count desc
-;
 
 -----------------------------------------------------------------------
--- OJO ESTO NO VALE, HAY QUE DISTINGUIR POR NOMBRES LOS REPETIDOS    --
+-- HAY QUE DISTINGUIR POR NOMBRES LOS REPETIDOS 
 -- Alvarez, Álvarez, ALVAREZ, etc
+-- para se usa "Correo electrónico" como identificador único de persona
+-- para 2017
 -----------------------------------------------------------------------
 
 drop table email_asistentes_2017;
