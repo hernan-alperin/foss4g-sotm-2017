@@ -98,5 +98,33 @@ order by "año", "Tipo de evento"
  2017 | Webinarios                                                                               |     3
 (8 filas)
 
+-- cantidad de asistentes acreditados, participantes o cambiados por tipo de evento
+with distintos as (select distinct "Correo electrónico" as email,
+                   substr("Fecha de pedido",1,4) as "año",
+                   case
+                      when "Nombre del evento" ilike '%taller%' then 'Talleres'
+                      when "Nombre del evento" ilike '%webinario%' then 'Webinarios'
+                   else "Nombre del evento" 
+                   end as "Tipo de evento"
+                   from asistentes
+                   where "Estado del participante" in ('Acreditado', 'Participa', 'Cambiado'))
+-- para evitar repetición en tipo de evento
+-- el único campo útil es "Correo electrónico", siempre presente
+select "año", "Tipo de evento", count(*)
+from distintos
+group by "año", "Tipo de evento"
+order by "año", "Tipo de evento"
+;
 
+ año  |                                      Tipo de evento                                      | count
+------+------------------------------------------------------------------------------------------+-------
+ 2016 | Encuentro de Geodatos Abiertos                                                           |    78
+ 2016 | FOSS4G Argentina 2016                                                                    |   188
+ 2016 | Talleres                                                                                 |   151
+ 2017 | FOSS4G + SOTM 2017 ARGENTINA                                                             |   148
+ 2017 | Jornada sobre el Software Libre de Geomática y SIG aplicado a Educación e Investigación  |    18
+ 2017 | Mapatón / Hackatón                                                                       |    45
+ 2017 | Talleres                                                                                 |   216
+ 2017 | Webinarios                                                                               |   244
+(8 filas)
 
