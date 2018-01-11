@@ -49,12 +49,12 @@ d3.csv("data.csv", function(d) {
 
   arc.append("path")
       .attr("d", path)
-      .attr("fill", function(d) { return color(d.data.evento); });
+      .attr("fill", function(d) { return color(d.data.sexo); });
 
   arc.append("text")
       .attr("transform", function(d) { return "translate(" + label.centroid(d) + ")"; })
       .attr("dy", "0.35em")
-      .text(function(d) { return d.data.evento; });
+      .text(function(d) { return d.data.sexo; });
 });
 
 </script>
